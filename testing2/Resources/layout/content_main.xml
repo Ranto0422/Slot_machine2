@@ -3,10 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="#222"
+    android:padding="0dp"
+    
     tools:context=".MainActivity">
-
+	<!-- BACKGEROUND -->
+	<ImageView
+    android:id="@+id/backgroundImage"
+    android:layout_width="1500dp"
+    android:layout_height="1500dp"
+	android:src="@drawable/bgtheme1"
+    android:scaleType="centerInside"
+    android:adjustViewBounds="true"
+    android:layout_centerInParent="true" />
 	<!-- Title -->
 	<TextView
         android:id="@+id/titleText"
@@ -19,62 +27,107 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"/>
 
-	<!-- Slot machine reels -->
-	<LinearLayout
-        android:id="@+id/reelsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/titleText"
-        android:layout_marginTop="32dp"
-        android:gravity="center" 
-        android:orientation="horizontal"
-        android:layout_centerHorizontal="true"
-        android:weightSum="3">
+	<FrameLayout
+    android:id="@+id/slotFrame"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_below="@id/titleText"
+    android:layout_marginTop="250dp"
+    android:layout_centerHorizontal="true">
 
-		<ImageView
-            android:id="@+id/slot1"
-            android:layout_width="0dp"
-            android:layout_height="150dp"
-            android:layout_weight="1"
-            android:layout_margin="8dp"
-            android:background="#444"
-            android:scaleType="fitCenter"
-            android:src="@drawable/slotsymbol1" />
+		
 
-		<ImageView
-            android:id="@+id/slot2"
-            android:layout_width="0dp"
-            android:layout_height="150dp"
-            android:layout_weight="1"
-            android:layout_margin="8dp"
-            android:background="#444"
-            android:scaleType="fitCenter"
-            android:src="@drawable/slotsymbol2" />
+		<!-- Reels container -->
+		<LinearLayout
+			android:id="@+id/reelsLayout"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:gravity="center"
+			android:orientation="horizontal"
+			android:paddingHorizontal="0dp"
+			android:weightSum="4">
 
-		<ImageView
-            android:id="@+id/slot3"
-            android:layout_width="0dp"
-            android:layout_height="150dp"
-            android:layout_weight="1"
-            android:layout_margin="8dp"
-            android:background="#444"
-            android:scaleType="fitCenter"
-            android:src="@drawable/slotsymbol3" />
-	</LinearLayout>
+			<ImageView
+				android:id="@+id/slot1"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:layout_margin="1dp"
+				android:scaleType="fitCenter" />
+
+			<ImageView
+				android:id="@+id/slot2"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:layout_margin="1dp"
+				android:scaleType="fitCenter" />
+
+			<ImageView
+				android:id="@+id/slot3"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:layout_margin="1dp"
+				android:scaleType="fitCenter" />
+		</LinearLayout>
+	</FrameLayout>
 
 	<!-- Spin Button -->
 	<Button
-        android:id="@+id/spinButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SPIN"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_below="@id/reelsLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
-        android:padding="16dp"
-        android:background="#FF5722"
-        android:textColor="#FFF"/>
+		android:id="@+id/spinButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="SPIN"
+		android:textSize="18sp"
+		android:textStyle="bold"
+		android:layout_below="@id/reelsLayout"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="32dp"
+		android:padding="16dp"
+		android:background="#FF5722"
+		android:textColor="#FFF" />
+
+	<!-- Control Buttons -->
+	<LinearLayout
+		android:id="@+id/controlButtons"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/spinButton"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="16dp"
+		android:orientation="horizontal"
+		android:gravity="center">
+
+		<Button
+			android:id="@+id/stopButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="STOP"
+			android:paddingHorizontal="16dp"
+			android:background="#9E9E9E"
+			android:textColor="#FFF" />
+
+		<Button
+			android:id="@+id/theme1Button"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="THEME 1"
+			android:layout_marginStart="12dp"
+			android:background="#03A9F4"
+			android:textColor="#FFF" />
+
+		<Button
+			android:id="@+id/theme2Button"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="THEME 2"
+			android:layout_marginStart="12dp"
+			android:background="#4CAF50"
+			android:textColor="#FFF" />
+	</LinearLayout>
+	
+	
+
 
 </RelativeLayout>
