@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#222"
+    tools:context=".MainActivity">
+
+	<!-- Title -->
+	<TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sll=lllt Machine"
+        android:textColor="#FFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"/>
+
+	<!-- Slot machine reels -->
+	<LinearLayout
+        android:id="@+id/reelsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleText"
+        android:layout_marginTop="32dp"
+        android:gravity="center" 
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:weightSum="3">
+
+		<ImageView
+            android:id="@+id/slot1"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:background="#444"
+            android:scaleType="fitCenter"
+            android:src="@drawable/slotsymbol1" />
+
+		<ImageView
+            android:id="@+id/slot2"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:background="#444"
+            android:scaleType="fitCenter"
+            android:src="@drawable/slotsymbol2" />
+
+		<ImageView
+            android:id="@+id/slot3"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:background="#444"
+            android:scaleType="fitCenter"
+            android:src="@drawable/slotsymbol3" />
+	</LinearLayout>
+
+	<!-- Spin Button -->
+	<Button
+        android:id="@+id/spinButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SPIN"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_below="@id/reelsLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:padding="16dp"
+        android:background="#FF5722"
+        android:textColor="#FFF"/>
+
+</RelativeLayout>
