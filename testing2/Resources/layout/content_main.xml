@@ -4,73 +4,185 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="0dp"
-    
     tools:context=".MainActivity">
-	<!-- BACKGEROUND -->
+
+	<!-- BACKGROUND -->
 	<ImageView
     android:id="@+id/backgroundImage"
-    android:layout_width="1500dp"
-    android:layout_height="1500dp"
-	android:src="@drawable/bgtheme1"
-    android:scaleType="centerInside"
-    android:adjustViewBounds="true"
-    android:layout_centerInParent="true" />
+    android:layout_width="match_parent"   android:layout_height="match_parent"  android:src="@drawable/bgtheme1_1"
+    android:scaleType="centerCrop"        android:adjustViewBounds="false"      android:layout_centerInParent="true"  />
+
 	<!-- Title -->
 	<TextView
-        android:id="@+id/titleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sll=lllt Machine"
-        android:textColor="#FFF"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"/>
+		android:id="@+id/titleText"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Slot Machine"
+		android:textColor="#FFF"
+		android:textSize="24sp"
+		android:textStyle="bold"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="24dp"/>
 
-	<FrameLayout
-    android:id="@+id/slotFrame"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
+
+	<!-- DEposit amount -->
+	<LinearLayout
+    android:id="@+id/bankLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_below="@id/moneyLayout"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="12dp"
+    android:gravity="center_vertical">
+
+		<TextView
+			android:id="@+id/bankAmount"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Bank: $"
+			android:textColor="#FFF"
+			android:textSize="24sp"
+			android:textStyle="bold"
+			android:layout_marginEnd="12dp"/>
+
+		<Button
+			android:id="@+id/addBankButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="ADD to Bank"
+			android:background="#8BC34A"
+			android:textColor="#000"/>
+	</LinearLayout>
+	
+	
+	<!-- ADD A BET -->
+	<LinearLayout
+    android:id="@+id/moneyLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:layout_below="@id/titleText"
-    android:layout_marginTop="250dp"
-    android:layout_centerHorizontal="true">
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="12dp"
+    android:gravity="center_vertical">
 
-		
+		<TextView
+			android:id="@+id/dollaramount"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Bet $"
+			android:textColor="#FFF"
+			android:textSize="30sp"
+			android:textStyle="bold"
+			android:layout_marginEnd="12dp"/>
 
-		<!-- Reels container -->
-		<LinearLayout
-			android:id="@+id/reelsLayout"
+		<Button
+			android:id="@+id/addAmountButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="ADD $"
+			android:background="#FFC107"
+			android:textColor="#000"/>
+	</LinearLayout>
+
+	<!-- 3x3 Slot Grid -->
+	<FrameLayout
+		android:id="@+id/slotFrame"
+		android:layout_width="match_parent"
+		android:layout_height="300dp"
+		android:layout_below="@id/titleText"
+		android:layout_marginTop="150dp"
+		android:layout_centerHorizontal="true">
+
+		<!-- 3x3 Grid Layout -->
+		<GridLayout
+			android:id="@+id/slotGrid"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:gravity="center"
-			android:orientation="horizontal"
-			android:paddingHorizontal="0dp"
-			android:weightSum="4">
+			android:columnCount="3"
+			android:rowCount="3"
+			android:layout_gravity="center"
+			android:orientation="horizontal">
 
+			<!-- Row 1 -->
 			<ImageView
-				android:id="@+id/slot1"
+				android:id="@+id/slot1_1"
 				android:layout_width="0dp"
-				android:layout_height="match_parent"
-				android:layout_weight="1"
-				android:layout_margin="1dp"
+				android:layout_height="0dp"
+				android:layout_columnWeight="1"
+				android:layout_rowWeight="1"
+				android:layout_margin="2dp"
+				android:scaleType="fitCenter" />
+			<ImageView
+				android:id="@+id/slot1_2"
+				android:layout_width="0dp"
+				android:layout_height="0dp"
+				android:layout_columnWeight="1"
+				android:layout_rowWeight="1"
+				android:layout_margin="2dp"
+				android:scaleType="fitCenter" />
+			<ImageView
+				android:id="@+id/slot1_3"
+				android:layout_width="0dp"
+				android:layout_height="0dp"
+				android:layout_columnWeight="1"
+				android:layout_rowWeight="1"
+				android:layout_margin="2dp"
 				android:scaleType="fitCenter" />
 
+			<!-- Row 2 -->
 			<ImageView
-				android:id="@+id/slot2"
+				android:id="@+id/slot2_1"
 				android:layout_width="0dp"
-				android:layout_height="match_parent"
-				android:layout_weight="1"
-				android:layout_margin="1dp"
+				android:layout_height="0dp"
+				android:layout_columnWeight="1"
+				android:layout_rowWeight="1"
+				android:layout_margin="2dp"
+				android:scaleType="fitCenter" />
+			<ImageView
+				android:id="@+id/slot2_2"
+				android:layout_width="0dp"
+				android:layout_height="0dp"
+				android:layout_columnWeight="1"
+				android:layout_rowWeight="1"
+				android:layout_margin="2dp"
+				android:scaleType="fitCenter" />
+			<ImageView
+				android:id="@+id/slot2_3"
+				android:layout_width="0dp"
+				android:layout_height="0dp"
+				android:layout_columnWeight="1"
+				android:layout_rowWeight="1"
+				android:layout_margin="2dp"
 				android:scaleType="fitCenter" />
 
+			<!-- Row 3 -->
 			<ImageView
-				android:id="@+id/slot3"
+				android:id="@+id/slot3_1"
 				android:layout_width="0dp"
-				android:layout_height="match_parent"
-				android:layout_weight="1"
-				android:layout_margin="1dp"
+				android:layout_height="0dp"
+				android:layout_columnWeight="1"
+				android:layout_rowWeight="1"
+				android:layout_margin="2dp"
 				android:scaleType="fitCenter" />
-		</LinearLayout>
+			<ImageView
+				android:id="@+id/slot3_2"
+				android:layout_width="0dp"
+				android:layout_height="0dp"
+				android:layout_columnWeight="1"
+				android:layout_rowWeight="1"
+				android:layout_margin="2dp"
+				android:scaleType="fitCenter" />
+			<ImageView
+				android:id="@+id/slot3_3"
+				android:layout_width="0dp"
+				android:layout_height="0dp"
+				android:layout_columnWeight="1"
+				android:layout_rowWeight="1"
+				android:layout_margin="2dp"
+				android:scaleType="fitCenter" />
+		</GridLayout>
 	</FrameLayout>
 
 	<!-- Spin Button -->
@@ -81,7 +193,7 @@
 		android:text="SPIN"
 		android:textSize="18sp"
 		android:textStyle="bold"
-		android:layout_below="@id/reelsLayout"
+		android:layout_below="@id/slotFrame"
 		android:layout_centerHorizontal="true"
 		android:layout_marginTop="32dp"
 		android:padding="16dp"
@@ -98,7 +210,6 @@
 		android:layout_marginTop="16dp"
 		android:orientation="horizontal"
 		android:gravity="center">
-
 		<Button
 			android:id="@+id/stopButton"
 			android:layout_width="wrap_content"
@@ -107,7 +218,6 @@
 			android:paddingHorizontal="16dp"
 			android:background="#9E9E9E"
 			android:textColor="#FFF" />
-
 		<Button
 			android:id="@+id/theme1Button"
 			android:layout_width="wrap_content"
@@ -116,7 +226,6 @@
 			android:layout_marginStart="12dp"
 			android:background="#03A9F4"
 			android:textColor="#FFF" />
-
 		<Button
 			android:id="@+id/theme2Button"
 			android:layout_width="wrap_content"
@@ -126,8 +235,5 @@
 			android:background="#4CAF50"
 			android:textColor="#FFF" />
 	</LinearLayout>
-	
-	
-
 
 </RelativeLayout>
