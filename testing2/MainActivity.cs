@@ -30,11 +30,26 @@ namespace testing2
         };
 
         int[] theme2Symbols = {
-            Resource.Drawable.slotsymbol1,
-            Resource.Drawable.slotsymbol2,
-            Resource.Drawable.slotsymbol3,
-            Resource.Drawable.slotsymbol4
+            Resource.Drawable.symbol1,
+            Resource.Drawable.symbol2,
+            Resource.Drawable.symbol3,
+            Resource.Drawable.symbol4
         };
+
+        private void UpdateSlotGridImages()
+        {
+            for (int row = 0; row < 3; row++)
+            {
+                for (int col = 0; col < 3; col++)
+                {
+                    int symbolIndex = currentSymbols[row, col];
+                    // Clamp index in case the new theme has fewer symbols
+                    if (symbolIndex >= slotSymbols.Length)
+                        symbolIndex = slotSymbols.Length - 1;
+                    slotGrid[row, col].SetImageResource(slotSymbols[symbolIndex]);
+                }
+            }
+        }
 
         int currentBackground = Resource.Drawable.BGtheme1; // default
         int[] slotSymbols;
@@ -72,13 +87,14 @@ namespace testing2
             Button theme1Button = FindViewById<Button>(Resource.Id.theme1Button);
             Button theme2Button = FindViewById<Button>(Resource.Id.theme2Button);
 
-            
+
 
             theme1Button.Click += (s, e) =>
             {
                 slotSymbols = theme1Symbols;
                 currentBackground = Resource.Drawable.BGtheme1_1;
                 backgroundImage.SetImageResource(currentBackground);
+                UpdateSlotGridImages();
             };
 
             theme2Button.Click += (s, e) =>
@@ -86,6 +102,8 @@ namespace testing2
                 slotSymbols = theme2Symbols;
                 currentBackground = Resource.Drawable.BGTheme2_1;
                 backgroundImage.SetImageResource(currentBackground);
+                UpdateSlotGridImages();
+
             };
 
             Button stopButton = FindViewById<Button>(Resource.Id.stopButton);
@@ -99,21 +117,12 @@ namespace testing2
             };
 
 
-
-
             //depositing and betting buttons and functionality
 
             bankAmountText = FindViewById<TextView>(Resource.Id.bankAmount);
             var addAmountButton = FindViewById<Button>(Resource.Id.addAmountButton); // Transfer bank → wallet
             var addBankButton = FindViewById<Button>(Resource.Id.addBankButton);     // Deposit to bank
 
-
-
-
-
-            
-
-            
 
 
             //Add to bank 
