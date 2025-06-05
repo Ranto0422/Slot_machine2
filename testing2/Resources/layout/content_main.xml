@@ -8,13 +8,9 @@
 
 	<!-- BACKGROUND -->
 	<ImageView
-		android:id="@+id/backgroundImage"
-		android:layout_width="1500dp"
-		android:layout_height="1500dp"
-		android:src="@drawable/bgtheme1"
-		android:scaleType="centerInside"
-		android:adjustViewBounds="true"
-		android:layout_centerInParent="true" />
+    android:id="@+id/backgroundImage"
+    android:layout_width="match_parent"   android:layout_height="match_parent"  android:src="@drawable/bgtheme1_1"
+    android:scaleType="centerCrop"        android:adjustViewBounds="false"      android:layout_centerInParent="true"  />
 
 	<!-- Title -->
 	<TextView
@@ -27,6 +23,68 @@
 		android:textStyle="bold"
 		android:layout_centerHorizontal="true"
 		android:layout_marginTop="24dp"/>
+
+
+	<!-- DEposit amount -->
+	<LinearLayout
+    android:id="@+id/bankLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_below="@id/moneyLayout"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="12dp"
+    android:gravity="center_vertical">
+
+		<TextView
+			android:id="@+id/bankAmount"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Bank: $"
+			android:textColor="#FFF"
+			android:textSize="24sp"
+			android:textStyle="bold"
+			android:layout_marginEnd="12dp"/>
+
+		<Button
+			android:id="@+id/addBankButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="ADD to Bank"
+			android:background="#8BC34A"
+			android:textColor="#000"/>
+	</LinearLayout>
+	
+	
+	<!-- ADD A BET -->
+	<LinearLayout
+    android:id="@+id/moneyLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_below="@id/titleText"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="12dp"
+    android:gravity="center_vertical">
+
+		<TextView
+			android:id="@+id/dollaramount"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Bet $"
+			android:textColor="#FFF"
+			android:textSize="30sp"
+			android:textStyle="bold"
+			android:layout_marginEnd="12dp"/>
+
+		<Button
+			android:id="@+id/addAmountButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="ADD $"
+			android:background="#FFC107"
+			android:textColor="#000"/>
+	</LinearLayout>
 
 	<!-- 3x3 Slot Grid -->
 	<FrameLayout

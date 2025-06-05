@@ -1,5 +1,6 @@
 ﻿using System;
 using Android.App;
+using Android.Icu.Util;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -43,6 +44,14 @@ namespace testing2
         bool isSpinning = false;
         bool stopRequested = false;
         bool[,] reelStopped = new bool[3, 3];
+        
+        //DECLARE AMOUNTS
+        TextView dollarAmountText;
+        TextView bankAmountText;
+
+        decimal currentAmount = 0m;
+        decimal bankAmount = 0m;
+        decimal currentBet = 0m;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -50,23 +59,28 @@ namespace testing2
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
             slotSymbols = theme1Symbols; // Set initial theme
+            dollarAmountText = FindViewById<TextView>(Resource.Id.dollaramount);
+
+            dollarAmountText.Text = $"${currentAmount:0.00}";
 
             ImageView backgroundImage = FindViewById<ImageView>(Resource.Id.backgroundImage);
 
             Button theme1Button = FindViewById<Button>(Resource.Id.theme1Button);
             Button theme2Button = FindViewById<Button>(Resource.Id.theme2Button);
 
+            
+
             theme1Button.Click += (s, e) =>
             {
                 slotSymbols = theme1Symbols;
-                currentBackground = Resource.Drawable.BGtheme1;
+                currentBackground = Resource.Drawable.BGtheme1_1;
                 backgroundImage.SetImageResource(currentBackground);
             };
 
             theme2Button.Click += (s, e) =>
             {
                 slotSymbols = theme2Symbols;
-                currentBackground = Resource.Drawable.BGtheme2;
+                currentBackground = Resource.Drawable.BGTheme2_1;
                 backgroundImage.SetImageResource(currentBackground);
             };
 
@@ -76,12 +90,130 @@ namespace testing2
                 stopRequested = true;
             };
 
-            // Background change size via scale
-            if (backgroundImage != null)
+
+
+
+            //depositing and betting buttons and functionality
+
+            bankAmountText = FindViewById<TextView>(Resource.Id.bankAmount);
+            var addAmountButton = FindViewById<Button>(Resource.Id.addAmountButton); // Transfer bank → wallet
+            var addBankButton = FindViewById<Button>(Resource.Id.addBankButton);     // Deposit to bank
+
+
+
+
+
+            
+
+            
+
+
+            //Add to bank 
+            addBankButton.Click += (s, e) =>
             {
-                backgroundImage.ScaleX = 3f;
-                backgroundImage.ScaleY = 4f;
+                var input = new EditText(this)
+                {
+                    InputType = Android.Text.InputTypes.ClassNumber | Android.Text.InputTypes.NumberFlagDecimal
+                };
+
+                new Android.App.AlertDialog.Builder(this)
+                    .SetTitle("Deposit to Bank")
+                    .SetMessage("Enter deposit amount:")
+                    .SetView(input)
+                    .SetPositiveButton("Deposit", (sender, args) =>
+                    {
+                        if (decimal.TryParse(input.Text, out decimal value) && value > 0)
+                        {
+                            bankAmount += value;
+                            bankAmountText.Text = $"Bank: ${bankAmount:0.00}";
+                        }
+                        else
+                        {
+                            Toast.MakeText(this, "Invalid amount", ToastLength.Short).Show();
+                        }
+                    })
+                    .SetNegativeButton("Cancel", (sender, args) => { })
+                    .Show();
+            };
+
+            //Transfer from Bank to Machine (Wallet)
+            addAmountButton.Click += (s, e) =>
+            {
+                var input = new EditText(this)
+                {
+                    InputType = Android.Text.InputTypes.ClassNumber | Android.Text.InputTypes.NumberFlagDecimal
+                };
+
+                new Android.App.AlertDialog.Builder(this)
+                    .SetTitle("Transfer to Wallet")
+                    .SetMessage("Enter amount to move from Bank to Wallet:")
+                    .SetView(input)
+                    .SetPositiveButton("Transfer", (sender, args) =>
+                    {
+                        if (decimal.TryParse(input.Text, out decimal value) && value > 0)
+                        {
+                            if (bankAmount >= value)
+                            {
+                                bankAmount -= value;
+                                currentAmount += value;
+
+                                // Update UI
+                                bankAmountText.Text = $"Bank: ${bankAmount:0.00}";
+                                dollarAmountText.Text = $"${currentAmount:0.00}";
+                            }
+                            else
+                            {
+                                Toast.MakeText(this, "Not enough in Wallet", ToastLength.Short).Show();
+                            }
+                        }
+                        else
+                        {
+                            Toast.MakeText(this, "Invalid amount", ToastLength.Short).Show();
+                        }
+                    })
+                    .SetNegativeButton("Cancel", (sender, args) => { })
+                    .Show();
+            };
+
+            //make sure na may bet amount befoore starting
+            void PromptForBetAndSpin(Action onBetAccepted)
+            {
+                var input = new EditText(this)
+                {
+                    InputType = Android.Text.InputTypes.ClassNumber | Android.Text.InputTypes.NumberFlagDecimal
+                };
+
+                new Android.App.AlertDialog.Builder(this)
+                    .SetTitle("Place Your Bet")
+                    .SetMessage("Enter bet amount:")
+                    .SetView(input)
+                    .SetPositiveButton("Bet", (sender, args) =>
+                    {
+                        if (decimal.TryParse(input.Text, out decimal bet) && bet > 0)
+                        {
+                            if (currentAmount >= bet)
+                            {
+                                currentBet = bet;
+                                currentAmount -= bet;
+                                dollarAmountText.Text = $"${currentAmount:0.00}";
+                                onBetAccepted?.Invoke();
+                            }
+                            else
+                            {
+                                Toast.MakeText(this, "Not enough in Bank", ToastLength.Short).Show();
+                            }
+                        }
+                        else
+                        {
+                            Toast.MakeText(this, "Invalid bet", ToastLength.Short).Show();
+                        }
+                    })
+                    .SetNegativeButton("Cancel", (sender, args) => { })
+                    .Show();
             }
+
+
+
 
             // Initialize the 3x3 grid of slot ImageViews
             InitializeSlotGrid();
@@ -92,31 +224,34 @@ namespace testing2
             {
                 if (isSpinning) return;
 
-                isSpinning = true;
-                stopRequested = false;
-                finishedSlots = 0;
-                reelStopped = new bool[3, 3]; // reset state
-                for (int row = 0; row < 3; row++)
+                PromptForBetAndSpin(() =>
                 {
-                    for (int col = 0; col < 3; col++)
+                    isSpinning = true;
+                    stopRequested = false;
+                    finishedSlots = 0;
+                    reelStopped = new bool[3, 3]; // reset state
+                    for (int row = 0; row < 3; row++)
                     {
-                        slotGrid[row, col].Alpha = 1.0f;
+                        for (int col = 0; col < 3; col++)
+                        {
+                            slotGrid[row, col].Alpha = 1.0f;
+                        }
                     }
-                }
 
-                for (int row = 0; row < 3; row++)
-                {
-                    for (int col = 0; col < 3; col++)
+                    for (int row = 0; row < 3; row++)
                     {
-                        int duration = random.Next(2000, 10000);
-                        int currentRow = row;
-                        int currentCol = col;
-                        StartQuickSpin(slotGrid[row, col], duration, () => CheckSpinComplete(), currentRow, currentCol);
+                        for (int col = 0; col < 3; col++)
+                        {
+                            int duration = random.Next(2000, 10000);
+                            int currentRow = row;
+                            int currentCol = col;
+                            StartQuickSpin(slotGrid[row, col], duration, () => CheckSpinComplete(), currentRow, currentCol);
+                        }
                     }
-                }
+                });
             };
 
-            
+
         }
 
         private void InitializeSlotGrid()
@@ -286,12 +421,16 @@ namespace testing2
 
             if (win)
             {
-                Toast.MakeText(this, "You Win!", ToastLength.Long).Show();
+                decimal winnings = currentBet * 2;
+                currentAmount += winnings;
+                dollarAmountText.Text = $"${currentAmount:0.00}";
+                Toast.MakeText(this, $"You Win! +${winnings:0.00}", ToastLength.Long).Show();
             }
             else
             {
-                Toast.MakeText(this, "No Win", ToastLength.Short).Show();
+                Toast.MakeText(this, $"No Win! -${currentBet:0.00}", ToastLength.Short).Show();
             }
+            currentBet = 0m;
         }
 
     }
